@@ -58,7 +58,7 @@ form.get(formField.name)?.getError('maxContentSize').actualSize
       <mat-label>{{ formField.label }}</mat-label>
       <mat-button-toggle-group (change)="onChange(formField.onChange)"  [ngStyle]="formField.style"
                                #group="matButtonToggleGroup" [value]="formField.initialValue">
-        <mat-button-toggle *ngFor="let value of formField.values"
+        <mat-button-toggle *ngFor="let value of formField.values" [ngStyle]="{width: 100 / formField.values.length +'%'}"
                            value="{{ value.value }}" class="rounded">{{ value.valueName }}</mat-button-toggle>
       </mat-button-toggle-group>
     </ng-container>

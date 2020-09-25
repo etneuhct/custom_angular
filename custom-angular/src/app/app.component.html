@@ -1,4 +1,13 @@
-<app-x-form
-  [formFields]="form" #xForm>
-</app-x-form>
-<button (click)="submit(xForm)" mat-button>Check</button>
+<div>
+  <app-x-form
+    [formFields]="form" #xFormCreate>
+  </app-x-form>
+  <button (click)="create(xFormCreate)" mat-button>Creer</button>
+</div>
+<div *ngFor="let book of (books | async)">
+  <app-x-form
+    [formFields]="book.form" #xFormUpdate>
+  </app-x-form>
+  <button (click)="update(book.data, xFormUpdate)" mat-button>Enregistrer</button>
+  <button (click)="delete(book.data)" mat-button>Supprimer</button>
+</div>

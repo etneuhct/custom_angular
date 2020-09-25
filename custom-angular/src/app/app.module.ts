@@ -15,8 +15,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {FormErrorComponent} from './_shared/x-form/form-error/form-error.component';
-import {MatButtonModule} from "@angular/material/button";
-import {MaterialFileInputModule} from "ngx-material-file-input";
+import {MatButtonModule} from '@angular/material/button';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {MaterialFileInputModule} from "ngx-material-file-input";
     FormErrorComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

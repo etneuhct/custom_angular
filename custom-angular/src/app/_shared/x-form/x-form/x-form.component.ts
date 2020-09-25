@@ -53,10 +53,6 @@ export class XFormComponent implements OnInit, OnChanges {
     return this.form.value;
   }
 
-  private getMultipleInputWidth(inputCount): {} {
-    return { width: 100 / inputCount + '%' };
-  }
-
   public onChange(onChangeFunction): void {
     if (onChangeFunction) {
       onChangeFunction(this);
@@ -104,3 +100,20 @@ export enum XFormFieldType {
   fileField,
   checkbox
 }
+
+export function feedFormFromData(formFields: XFormField[], data: {}): XFormField[] {
+  for (const field of formFields) {
+      for (const dataItem of Object.keys(data)) {
+        if (field.name === dataItem) {
+          if (field.type === XFormFieldType.checkbox) {
+            field.initialValue = field.initialValue === 'true' || field.initialValue === true;
+          }
+          else {
+            field.initialValue = data[dataItem].toString();
+          }
+        }
+      }
+  }
+  return formFields;
+}
+

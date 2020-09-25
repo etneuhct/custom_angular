@@ -109,7 +109,7 @@ export class ObjectApiService {
 
   public onSuccessPatchObject(returnedObject, objectData, objectId): void {
     const itemIndex = this.findObjectIndex(objectId);
-    if (itemIndex) {
+    if (itemIndex !== null) {
       this.updateItem(returnedObject, itemIndex);
     }
     else {
