@@ -1,0 +1,45 @@
+<ng-container *ngIf="form.get(formField.name).hasError('required') else minlength">
+  Ce champ est obligatoire
+</ng-container>
+
+<ng-template #minlength>
+  <ng-container *ngIf="form.get(formField.name).hasError('minlength') else upperCase">
+    Ce champ doit avoir au moins {{ form.controls[formField.name].errors.minlength.requiredLength }} charactères
+  </ng-container>
+</ng-template>
+
+<ng-template #upperCase>
+  <ng-container *ngIf="form.get(formField.name).hasError('upperCaseRequired') else digit">
+    Ce champ doit avoir au moins une lettre majuscule
+  </ng-container>
+</ng-template>
+
+<ng-template #digit>
+  <ng-container *ngIf="form.get(formField.name).hasError('numberRequired') else notSame">
+    Ce champ doit avoir au moins un chiffre
+  </ng-container>
+</ng-template>
+
+<ng-template #notSame>
+  <ng-container *ngIf="form.get(formField.name).hasError('notSame') else maxlength">
+    Les valeurs doivent être identiques
+  </ng-container>
+</ng-template>
+
+<ng-template #maxlength>
+  <ng-container *ngIf="form.get(formField.name).hasError('maxlength') else actionVariableRequired">
+    Ce champ doit avoir moins de {{ form.controls[formField.name].errors.maxlength.requiredLength }} charactères
+  </ng-container>
+</ng-template>
+
+<ng-template #actionVariableRequired>
+  <ng-container *ngIf="form.get(formField.name).hasError('actionVariableRequired') else actionVariableInvalidFormat">
+    Ce champ doit contenir au moins une variable d'action
+  </ng-container>
+</ng-template>
+
+<ng-template #actionVariableInvalidFormat>
+  <ng-container *ngIf="form.get(formField.name).hasError('actionVariableInvalidFormat')">
+    Oups ! On dirait qu'un caractère invalide s'est glissé
+  </ng-container>
+</ng-template>

@@ -1,0 +1,81 @@
+<form (ngSubmit)="isValid()" [formGroup]="form" style="display: flex; flex-direction: column"
+      (change)="onChange(activateOnChange)">
+  <ng-container *ngFor="let formField of formFields">
+    <mat-form-field *ngIf="formField.type === xFormFieldType.simpleInput"
+                    [appearance]="formField.formFieldAppearance ? formField.formFieldAppearance: 'outline'"
+                    (change)="onChange(formField.onChange)" [ngStyle]="formField.style">
+      <mat-label>{{ formField.label }}</mat-label>
+      <input matInput placeholder="{{ formField.placeholder }}" formControlName="{{ formField.name }}"
+             [type]="formField.inputType" #input maxlength="{{ formField.maxLength }}" [readonly]="formField.readOnly">
+      <mat-icon matSuffix [matTooltip]="formField.tooltip" *ngIf="formField.tooltip">error_outline</mat-icon>
+      <mat-error>
+        <app-form-error [form]="form" [formField]="formField"></app-form-error>
+      </mat-error>
+      <mat-hint *ngIf="formField.inputType !== 'number' && formField.maxLength" align="end">
+        {{input.value?.length || 0}}/{{ formField.maxLength }}
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field *ngIf="formField.type === xFormFieldType.textArea"
+                    [appearance]="formField.formFieldAppearance ? formField.formFieldAppearance: 'outline'"
+                    (change)="onChange(formField.onChange)"  [ngStyle]="formField.style"
+                    hintLabel="{{ formField.maxLength }} caractères maximum" style="width: 100%">
+      <mat-label>{{ formField.label }}</mat-label>
+      <textarea matInput placeholder="{{ formField.placeholder }}" formControlName="{{ formField.name }}"
+                cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="8" [id]="formField.id"
+                #input maxlength="{{ formField.maxLength }}" [readonly]="formField.readOnly"></textarea>
+      <mat-error>
+        <app-form-error [form]="form" [formField]="formField"></app-form-error>
+      </mat-error>
+      <mat-hint align="end">{{input.value?.length || 0}}/{{ formField.maxLength }}</mat-hint>
+    </mat-form-field>
+    <mat-form-field *ngIf="formField.type === xFormFieldType.selectField"
+                    [appearance]="formField.formFieldAppearance ? formField.formFieldAppearance: 'outline'"
+                    (change)="onChange(formField.onChange)" [ngStyle]="formField.style">
+      <mat-label>{{ formField.label }}</mat-label>
+      <mat-select placeholder="{{ formField.placeholder }}"
+                  formControlName="{{ formField.name }}">
+        <mat-option *ngFor="let value of formField.values" value="{{ value.value}}">{{ value.valueName }}</mat-option>
+      </mat-select>
+      <mat-error>
+        <app-form-error [form]="form" [formField]="formField"></app-form-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="formField.type === xFormFieldType.fileField"
+                    [appearance]="formField.formFieldAppearance ? formField.formFieldAppearance: 'outline'"
+                    (change)="onChange(formField.onChange)" [ngStyle]="formField.style">
+    <mat-label>{{ formField.label }}</mat-label>
+    <ngx-mat-file-input formControlName="{{ formField.name }}" placeholder="{{ formField.placeholder }}" [accept]="formField.extension"></ngx-mat-file-input>
+    <mat-icon matSuffix>cloud_queue</mat-icon>
+    <mat-error *ngIf="form.get(formField.name).hasError('maxContentSize')">
+      The total size must not exceed {{form.get(formField.name)?.getError('maxContentSize').maxSize | byteFormat}} ({{
+form.get(formField.name)?.getError('maxContentSize').actualSize
+  | byteFormat
+      }}).
+    </mat-error>
+    <mat-hint>La taille du fichier doit être inférieure {{ formField.maxLength | byteFormat }}</mat-hint>
+</mat-form-field>
+    <ng-container *ngIf="formField.type === xFormFieldType.toggleButton">
+      <mat-label>{{ formField.label }}</mat-label>
+      <mat-button-toggle-group (change)="onChange(formField.onChange)"  [ngStyle]="formField.style"
+                               #group="matButtonToggleGroup" [value]="formField.initialValue">
+        <mat-button-toggle *ngFor="let value of formField.values"
+                           value="{{ value.value }}" class="rounded">{{ value.valueName }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </ng-container>
+    <ng-container *ngIf="formField.type === xFormFieldType.checkbox">
+        <mat-checkbox formControlName="{{ formField.name }}"
+                      [checked]="formField.initialValue">
+          {{ formField.label }}
+        </mat-checkbox>
+    </ng-container>
+    <ng-container *ngIf="formField.type === xFormFieldType.slideToggle">
+        <mat-slide-toggle
+          formControlName="{{ formField.name }}"
+          [checked]="formField.initialValue">
+          {{ formField.label }}
+        </mat-slide-toggle>
+    </ng-container>
+  </ng-container>
+
+</form>
+
