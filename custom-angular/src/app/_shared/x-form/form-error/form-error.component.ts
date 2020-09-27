@@ -15,8 +15,3 @@ export class FormErrorComponent implements OnInit {
   }
 
 }
-
-export interface IFormError {
-  error: string;
-  message: string;
-}

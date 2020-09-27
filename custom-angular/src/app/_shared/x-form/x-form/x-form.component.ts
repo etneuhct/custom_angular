@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-x-form',
@@ -61,7 +61,6 @@ export class XFormComponent implements OnInit, OnChanges {
 
 }
 
-
 export interface XFormField {
   id?: string;
   tooltip?: string;
@@ -104,13 +103,11 @@ export enum XFormFieldType {
 export function feedFormFromData(formFields: XFormField[], data: {}): XFormField[] {
   for (const field of formFields) {
       for (const dataItem of Object.keys(data)) {
-        if (field.name === dataItem) {
-          if (field.type === XFormFieldType.checkbox) {
-            field.initialValue = field.initialValue === 'true' || field.initialValue === true;
-          }
-          else {
-            field.initialValue = data[dataItem].toString();
-          }
+        if (field.name === dataItem ) {
+          field.initialValue = data[dataItem].toString();
+        }
+        if (field.type === XFormFieldType.checkbox) {
+          field.initialValue = field.initialValue === 'true' || field.initialValue === true;
         }
       }
   }

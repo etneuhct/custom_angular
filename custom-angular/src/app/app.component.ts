@@ -40,7 +40,7 @@ export class AppComponent implements OnInit{
   }
 }
 
-function fieldOnChange(form): void{
+function fieldOnChange(form: XFormComponent): void{
 
 }
 
@@ -56,19 +56,19 @@ export function getBookForm(): XFormField[] {
       type: XFormFieldType.textArea, label: 'Description',
       name: 'description', formFieldAppearance: 'outline',
       initialValue: '', maxLength: 200, onChange: fieldOnChange,
-      validators: [Validators.required, Validators.maxLength(200)]
+      validators: [Validators.maxLength(200)]
     },
     {
       type: XFormFieldType.checkbox, label: 'Possédé',
       name: 'possessed', formFieldAppearance: 'outline',
       initialValue: false, maxLength: 200, onChange: fieldOnChange,
-      validators: [Validators.required, Validators.maxLength(200)]
+      validators: null
     },
     {
       type: XFormFieldType.selectField, label: 'Genre du livre',
       name: 'gender', formFieldAppearance: 'outline', values: [{value: 0, valueName: 'Gender1'}, {value: 1, valueName: 'Gender2'}],
       initialValue: '1', maxLength: 200, onChange: fieldOnChange,
-      validators: [Validators.required, Validators.maxLength(200)]
+      validators: [Validators.maxLength(200)]
     }
   ];
 }

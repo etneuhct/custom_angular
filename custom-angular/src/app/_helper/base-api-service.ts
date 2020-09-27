@@ -1,6 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
+export const apiPartUrl = {
+  book: 'book/'
+};
 
 interface BaseApiInterface {
   getObject(objectId?: number, queryParameter?: {}): Observable<any>;
@@ -13,7 +17,8 @@ interface BaseApiInterface {
 }
 
 export abstract class BaseApiService implements BaseApiInterface {
-  apiUrl: string;
+  baseApiUrl = environment.baseUrl;
+  apiUrl = this.baseApiUrl;
   protected constructor(private http: HttpClient) {
   }
   public getObject(id = null, queryParameter: {} = null): Observable<any[] | any> {

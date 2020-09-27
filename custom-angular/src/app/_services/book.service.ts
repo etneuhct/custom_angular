@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BaseApiService, ObjectApiService} from '../_helper/base-api-service';
+import {BaseApiService, ObjectApiService, apiPartUrl} from '../_helper/base-api-service';
 import {HttpClient} from '@angular/common/http';
 
 
@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class BookBaseService extends BaseApiService {
-  apiUrl = 'http://127.0.0.1:8000/book/';
+  apiUrl = this.baseApiUrl + apiPartUrl.book;
   constructor(http: HttpClient) {
     super(http);
   }
